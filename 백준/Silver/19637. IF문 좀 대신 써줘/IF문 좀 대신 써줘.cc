@@ -4,8 +4,14 @@
 
 using namespace std;
 
+void fast_io() {
+    ios::sync_with_stdio(0); 
+    cin.tie(0); 
+    cout.tie(0);
+}
+
 int main() {
-    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    fast_io();
     int N, M, power, P;
     string title;
     map <int, string> m;
