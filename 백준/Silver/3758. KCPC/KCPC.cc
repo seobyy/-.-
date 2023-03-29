@@ -1,10 +1,10 @@
 #include <iostream>
 #include <map>
-#define fast_io() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define fastio ios::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 using namespace std;
 
 int main() {
-    fast_io();
+    fastio;
     int T, n, k, t, m, i, j, s;
     cin >> T;
     for (int x = 0; x < T; ++x) {
