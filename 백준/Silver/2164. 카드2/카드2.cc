@@ -13,13 +13,12 @@ int main() {
             for (int i = 1; i <= N / 2; ++i) 
                 card[i] = card[2 * i];
             N /= 2;
-
         }
         else {
             int tmp = card[2];
             for (int i = 1; i < N / 2; ++i) 
                 card[i] = card[2 * i + 2];
-            card[N / 2] = tmp; 
+            card[N / 2] = tmp;
             N /= 2;
         }
     }
