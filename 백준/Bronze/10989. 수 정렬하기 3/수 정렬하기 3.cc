@@ -14,7 +14,7 @@ int main() {
     for (int i = 1; i<= 10000; ++i) {
         if (cnt[i] != 0) {
             for (int j = 0; j < cnt[i]; ++j)
-                printf("%d\n", i);
+                cout << i << '\n';
         }
     }
     return 0;
