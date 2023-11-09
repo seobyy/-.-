@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stack>
-#include <vector>
 #define fastio ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 #define MAX_N 100000
 using namespace std;
@@ -18,18 +17,17 @@ int main() {
     
     int next_index = 1;
     stack <int> stack;
-    vector <char> v;
+    string ans;
     
     for (int i = 1; i <= n; ++i) {
         if (i <= arr[next_index]) {
             stack.push(i);
-            v.push_back('+');
+            ans += "+\n";
         }
         else {
-            int n = stack.top();
-            if (n == arr[next_index]) {
+            if (stack.top() == arr[next_index]) {
                 stack.pop();
-                v.push_back('-');
+                ans += "-\n";
                 next_index++;
                 i--;
             }
@@ -41,10 +39,9 @@ int main() {
     }
     
     while (!stack.empty()) {
-        int n = stack.top();
-        if (n == arr[next_index]) {
+        if (stack.top() == arr[next_index]) {
             stack.pop();
-            v.push_back('-');
+            ans += "-\n";
             next_index++;
         }
         else {
@@ -53,9 +50,7 @@ int main() {
         }
     }
     
-    for (auto i : v) {
-        cout << i << '\n';
-    }
+    cout << ans << '\n';
     
     return 0;
 }
