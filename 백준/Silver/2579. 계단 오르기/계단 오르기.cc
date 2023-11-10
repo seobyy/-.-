@@ -17,11 +17,11 @@ int main() {
         cin >> stair[i];
     }
     
-    dp[1][0] = stair[1]; dp[1][1] = stair[1];
+    dp[1][0] = stair[1]; dp[1][1] = 0;
     
     for (int i = 2; i <= N; ++i) {
         dp[i][0] = max(dp[i - 2][0], dp[i - 2][1]) + stair[i];
-        dp[i][1] = max(dp[i - 1][0], dp[i - i][1]) + stair[i];
+        dp[i][1] = dp[i - 1][0] + stair[i];
     }
     
     
