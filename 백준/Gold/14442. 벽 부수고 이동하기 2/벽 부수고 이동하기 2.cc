@@ -1,59 +1,79 @@
 #include <iostream>
 #include <queue>
-#include <algorithm>
+#define fastio ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
+#define MAX_N 1000
+#define MAX_K 10
 using namespace std;
-const int MAX = 1000;
-int N,M,K;
-char arr[MAX][MAX];
-int dx[] = {-1, 0, 1, 0};
-int dy[] = {0, 1, 0, -1};
-queue<tuple<int,int,int,int>> q;
-int visited[MAX][MAX][10]; // 현재까지 부순 벽의 수
-int ans = 987654321;
 
-// BFS이므로 이미 방문한 곳에 뒤늦게 방문했다면 기존보다 절대로 더 빠른 경로가 아니다.
-int bfs() {
+struct POS {int dis; int y, x; int breakCnt;};
+
+int N, M, K;
+int ans = -1;
+int map[MAX_N][MAX_N];
+bool visited[MAX_K + 1][MAX_N][MAX_N];
+
+const int dy[4] = {-1, 0, 1, 0};    // 북 동 남 서 
+const int dx[4] = {0, 1, 0, -1};
+
+void bfs() {
+    
+    queue <POS> q;
+    q.push({1, 0, 0, 0});
+    visited[0][0][0] = true;
+    
     while (!q.empty()) {
-        auto cur = q.front();
+        
+        int d = q.front().dis;
+        int y = q.front().y;
+        int x = q.front().x;
+        int k = q.front().breakCnt;
         q.pop();
-        int x = get<0>(cur);
-        int y = get<1>(cur);
-        int cnt = get<2>(cur);
-        int block = get<3>(cur);
-        if (x == N-1 && y == M-1) {
-            return cnt;
+        
+        if (y == N - 1 && x == M - 1) {
+            ans = d;
+            break;
         }
-        for (int i = 0; i < 4; i++) {
-            int nx = x + dx[i];
+        
+        for (int i = 0; i < 4; ++i) {
             int ny = y + dy[i];
-            if (nx < 0 || nx >= N || ny < 0 || ny >= M) {
+            int nx = x + dx[i];
+            
+            if (ny < 0 || ny >= N || nx < 0 || nx >= M)
                 continue;
-            }
-            if (visited[nx][ny][block]) {
+            if (visited[k][ny][nx])
                 continue;
+            
+            if (!map[ny][nx]) {
+                visited[k][ny][nx] = true;
+                q.push({d + 1, ny, nx, k});
             }
-            if (arr[nx][ny] == '0') {
-                visited[nx][ny][block] = 1;
-                q.push({nx, ny, cnt+1, block});
-            }
-            else if (arr[nx][ny] == '1' && block + 1 <= K) {
-                visited[nx][ny][block + 1] = 1;
-                q.push({nx, ny, cnt+1, block+1});
+                
+            else {
+                if (k < K && !visited[k + 1][ny][nx]) {
+                    visited[k + 1][ny][nx] = true;
+                    q.push({d + 1, ny, nx, k + 1});
+                }
             }
         }
     }
-    return -1;
 }
+
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
+    
+    fastio;
     cin >> N >> M >> K;
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            cin >> arr[i][j];
+    
+    for (int i = 0; i < N; ++i) {
+        string str;
+        cin >> str;
+        for (int j = 0; j < M; ++j) {
+            map[i][j] = str[j] - '0';
         }
     }
-    q.push({0,0,1,0});
-    cout << bfs();
+    
+    bfs();
+    
+    cout << ans << '\n';
+    
     return 0;
 }
