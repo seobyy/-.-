@@ -4,22 +4,23 @@
 #define MAX_N 100'000
 using namespace std;
 
+int target;
 int A[MAX_N + 5];
 
-int binarySearch(int s, int e, int target) {
+int binarySearch(int s, int e) {
     
-    int mid = s + (e - s) / 2;
+    while (s <= e) {
+        int mid = s + (e - s) / 2;
     
-    if (s > e)
-        return 0;
+        if (A[mid] < target)
+            s = mid + 1;
+        else if (A[mid] > target)
+            e = mid - 1;
+        else
+            return 1;
+    }
     
-    if (A[mid] < target)
-        return binarySearch(mid + 1, e, target);
-    else if (A[mid] > target)
-        return binarySearch(s, mid - 1, target);
-    else
-        return 1;
-
+    return 0;
 }
 
 int main() {
@@ -36,9 +37,8 @@ int main() {
     
     cin >> M;
     for (int i = 0; i < M; ++i) {
-        int x;
-        cin >> x;
-        cout << binarySearch(0, N - 1, x) << '\n';
+        cin >> target;
+        cout << binarySearch(0, N - 1) << '\n';
     }
     
     
