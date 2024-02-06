@@ -6,24 +6,33 @@ using namespace std;
 
 int n, m;
 ll ans;
-ll arr[MAX_N + 5];
+
+priority_queue <ll, vector<ll>, greater<ll>> pq;
+
 
 void input() {
     cin >> n >> m;
     for (int i = 0; i < n; ++i) {
-        cin >> arr[i];
-        ans += arr[i];
+        int a; cin >> a;
+        ans += a;
+        pq.push(a);
     }
 }
 
 void solve() {
     for (int i = 0; i < m; ++i) {
-        swap(arr[0], *min_element(arr, arr + n));
-        swap(arr[1], *min_element(arr + 1, arr + n));
-        ll sum = arr[0] + arr[1];
-        ans += sum;
-        arr[0] = sum;
-        arr[1] = sum;
+        while (!pq.empty()) {
+            ll a1 = pq.top();
+            pq.pop();
+            ll a2 = pq.top();
+            pq.pop();
+            
+            ll sum = a1 + a2;
+            pq.push(sum);
+            pq.push(sum);
+            ans += sum;
+            break;
+        }
     }
 }
 
