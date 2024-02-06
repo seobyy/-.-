@@ -6,25 +6,24 @@ using namespace std;
 
 int n, m;
 ll ans;
-vector <ll> v;
-ll minNum[2];
+ll arr[MAX_N + 5];
 
 void input() {
     cin >> n >> m;
     for (int i = 0; i < n; ++i) {
-        int a; cin >> a;
-        ans += a;
-        v.push_back(a);
+        cin >> arr[i];
+        ans += arr[i];
     }
 }
 
 void solve() {
     for (int i = 0; i < m; ++i) {
-        sort(v.begin(), v.end());
-        ll sum = v[0] + v[1];
+        swap(arr[0], *min_element(arr, arr + n));
+        swap(arr[1], *min_element(arr + 1, arr + n));
+        ll sum = arr[0] + arr[1];
         ans += sum;
-        v[0] = sum;
-        v[1] = sum;
+        arr[0] = sum;
+        arr[1] = sum;
     }
 }
 
