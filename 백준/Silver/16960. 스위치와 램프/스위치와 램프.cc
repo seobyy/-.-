@@ -1,48 +1,52 @@
 #include <bits/stdc++.h>
 #define fastio ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
-#define MAX_N 2000
+#define MAX_M 2000
 using namespace std;
 
 int N, M;
-vector <int> v[MAX_N + 5];
-bool on[MAX_N + 5];
-bool canLight;
+int ans;
+int ramp[MAX_M + 5];
+vector <int> v[MAX_M + 5];
 
 void input() {
     cin >> N >> M;
     for (int i = 1; i <= N; ++i) {
-        int n; cin >> n;
-        for (int j = 0; j < n; ++j) {
-            int x; cin >> x;
-            v[i].push_back(x);
+        int x; cin >> x;
+        for (int j = 0; j < x; ++j) {
+            int n; cin >> n;
+            ramp[n]++;
+            v[i].push_back(n);
         }
     }
 }
 
 void solve() {
     for (int i = 1; i <= N; ++i) {
-        int cnt = 0;
-        memset(on, false, sizeof(on));
-        for (int j = 1; j <= N; ++j) {
-            if (i != j) {
-                for (auto k : v[j]) {
-                    if (!on[k]) {
-                        cnt++;
-                        on[k] = true;
-                    }
-                }
-            }
+        int cnt[MAX_M + 5];
+        memmove(cnt, ramp, sizeof(cnt));
+        
+        for (auto j: v[i]) {
+            cnt[j]--;
         }
-        if (cnt == M) {
-            canLight = true;
+        
+        bool canLight = true;
+        for (int j = 1; j <= M; ++j) {
+            if (cnt[j] < 1) {
+                canLight = false;
+                break;
+            }
+        } 
+        if (canLight) {
+            ans = 1;
             return;
         }
     }
 }
 
 void output() {
-    cout << canLight << '\n';
+    cout << ans << '\n';
 }
+
 
 int main() {
     
