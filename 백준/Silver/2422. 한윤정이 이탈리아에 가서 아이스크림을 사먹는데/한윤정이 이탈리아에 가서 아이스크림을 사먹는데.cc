@@ -5,7 +5,7 @@ using namespace std;
 
 int N, M;
 int ans;
-int no[205][205];
+bool no[205][205];
 
 void input() {
     cin >> N >> M;
